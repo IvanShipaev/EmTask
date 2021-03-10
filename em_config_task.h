@@ -39,7 +39,7 @@
 #define EM_PRINTF(...)					DEB_PRINTF(DEBUG_ROOT, __VA_ARGS__)
 #define cfgTEST_SP_SWITCH_TASK			0
 #define cfgFILL_SP						0x55555555
-// Настройка задачи управления Таймерами
+// Timer task
 #if cfgUSE_TIMER_TASK
 	#define cfgSIZE_STACK_TIMER_TASK 	256
 	#define cfgPRI_TIMER_TASK			(cfgNUM_PRI-1)
