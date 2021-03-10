@@ -98,7 +98,7 @@ static void __del_task_wait_list(em_task_t* task)
 	em_task_t* t_task;
 
 	if (rt_em_is_list_empty(&task->wait_list) == 0) {
-		if (task->wait_list.next != task->wait_list.prev) {
+		if (task->wait_list.next != &task_wait_list) {
 			t_task = rt_em_get_task_by_wait_list(task->wait_list.next);
 			t_task->timeout += task->timeout;
 		}
@@ -193,18 +193,7 @@ int rt_em_scheduler_is_enable(void)
 //--------------------------------------------------------------
 // Initialization kernel
 //--------------------------------------------------------------
-void em_kernel_init(void)
-{
-	em_mem_init();
-
-	for (int i = 0; i < cfgNUM_PRI; i++)
-		rt_em_list_clear(&task_ready_list[i]);
-	em_event_init(ev_sys);
-}
-//--------------------------------------------------------------
-// Start kernel
-//--------------------------------------------------------------
-void em_kernel_start(void)
+static void em_idle_task_init(void)
 {
 #if cfgSTATIC_SYSTEM_TASK
 	em_task_t *task;
@@ -218,11 +207,27 @@ void em_kernel_start(void)
 #else
 	ctask = em_task_new("IdleTask", 0, cfgSIZE_STACK_IDLE_TASK, NULL, FuncIdleTask, 1);
 #endif
+}
+//--------------------------------------------------------------
+void em_kernel_init(void)
+{
+	em_mem_init();
+
+	for (int i = 0; i < cfgNUM_PRI; i++)
+		rt_em_list_clear(&task_ready_list[i]);
+	em_event_init(ev_sys);
+
+	em_idle_task_init();
 
 #if (cfgUSE_TIMER_TASK)
 	em_timer_module_init();
 #endif
-
+}
+//--------------------------------------------------------------
+// Start kernel
+//--------------------------------------------------------------
+void em_kernel_start(void)
+{
 	counter_scheduler_disable = 0;
 	rt_em_port_start_first_task();
 }

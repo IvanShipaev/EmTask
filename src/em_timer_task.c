@@ -22,7 +22,7 @@ static void __del_timer_wait_list(em_timer_t* timer)
 	em_timer_t* t_timer;
 
 	if (rt_em_is_list_empty(&timer->timer_list) == 0) {
-		if (timer->timer_list.next != timer->timer_list.prev) {
+		if (timer->timer_list.next != &timer_wait_list) {
 			t_timer = rt_em_get_timer_by_timer_list(timer->timer_list.next);
 			t_timer->timeout += timer->timeout;
 		}
