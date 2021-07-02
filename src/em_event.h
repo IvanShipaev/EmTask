@@ -35,7 +35,7 @@ unsigned em_event_is_set(em_event_t* ev, enum ev_mode mode, unsigned flags);
 
 #ifdef _EM_TASK_PRIVATE_
 em_list_t* rt_em_get_event_init_list(void);
-inline em_event_t* rt_em_get_event_by_init_list(em_list_t* list)
+static inline em_event_t* rt_em_get_event_by_init_list(em_list_t* list)
 {
 	return rt_em_get_struct_by_field(list, em_event_t, init_list);
 }

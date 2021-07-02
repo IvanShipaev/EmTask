@@ -509,7 +509,7 @@ void rt_em_isr_system_tic(void)
 
 	__sys_tic();
 	__poll_task_wait_list();
-#if defined (cfgUSE_TIMER_TASK)
+#if (cfgUSE_TIMER_TASK)
 	rt_timer_poll_wait_list();
 #endif /* cfgUSE_TIMER_TASK */
 

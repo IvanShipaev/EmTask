@@ -39,18 +39,18 @@ int em_queue_fetch(em_queue_t* queue, void* msg, unsigned timeout,
 //--------------------------------------------------------------
 // These functions can be called both in tasks and in ISR
 //--------------------------------------------------------------
-inline int em_queue_try_post(em_queue_t *queue, void *msg, enum queue_mode mode)
+static inline int em_queue_try_post(em_queue_t *queue, void *msg, enum queue_mode mode)
 {
 	return em_queue_post(queue, msg, 0, mode);
 }
-inline int em_queue_try_fetch(em_queue_t* queue, void* msg, enum queue_mode mode)
+static inline int em_queue_try_fetch(em_queue_t* queue, void* msg, enum queue_mode mode)
 {
 	return em_queue_fetch(queue, msg, 0, mode);
 }
 
 #ifdef _EM_TASK_PRIVATE_
 em_list_t* rt_em_get_queue_init_list(void);
-inline em_queue_t* rt_em_get_queue_by_init_list(em_list_t* list)
+static inline em_queue_t* rt_em_get_queue_by_init_list(em_list_t* list)
 {
 	return rt_em_get_struct_by_field(list, em_queue_t, init_list);
 }

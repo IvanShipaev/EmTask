@@ -126,7 +126,7 @@ unsigned em_strlcpy(char *s1, const char *s2, unsigned size);
 	extern em_task_t *ctask;            // Current task
 #endif /* _EM_TASK_ */
 
-inline em_task_t* rt_em_get_task_by_task_list(em_list_t* list)
+static inline em_task_t* rt_em_get_task_by_task_list(em_list_t* list)
 {
 	return rt_em_get_struct_by_field(list, em_task_t, task_list);
 }

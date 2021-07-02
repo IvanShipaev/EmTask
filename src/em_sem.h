@@ -21,7 +21,7 @@ int em_sem_take(em_sem_t* sem, unsigned timeout);
 //--------------------------------------------------------------
 // These functions can be called both in tasks and in ISR
 //--------------------------------------------------------------
-inline int em_sem_try_take(em_sem_t* sem)
+static inline int em_sem_try_take(em_sem_t* sem)
 {
 	return em_sem_take(sem, 0);
 }
@@ -29,7 +29,7 @@ int em_sem_give(em_sem_t* sem);
 
 #ifdef _EM_TASK_PRIVATE_
 em_list_t* rt_em_get_sem_init_list(void);
-inline em_sem_t* rt_em_get_sem_by_init_list(em_list_t* list)
+static inline em_sem_t* rt_em_get_sem_by_init_list(em_list_t* list)
 {
 	return rt_em_get_struct_by_field(list, em_sem_t, init_list);
 }
